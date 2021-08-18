@@ -1,0 +1,16 @@
+{
+  "name": "abdonor/mapon",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "Albert Reis",
+  "authors": [
+    {
+      "name": "root",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "mapon-com/client-api-php-sdk" : "1.0.*",
+    "bshaffer/oauth2-server-php" : "^1.10"
+  }
+}

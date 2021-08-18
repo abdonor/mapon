@@ -1,0 +1,64 @@
+version: '3'
+services:
+
+  #PHP Service
+  app-mapon:
+    image: php:7.4-fpm
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-mapon
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app-mapon
+      SERVICE_TAGS: dev
+    volumes:
+      - ./:/var/www
+      - ./docker/php-fpm/usr/local/etc/php/php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - app-network
+
+  #Nginx Service mapon
+  webserver-mapon:
+    image: nginx:alpine
+    container_name: webserver-mapon
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 8088:80
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  #MySQL Service
+  db-mapon:
+    image: mysql:5.5
+    container_name: db-mapon
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3321:3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_DATABASE: mapon
+      MYSQL_ROOT_PASSWORD: 123
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ~/.docker/data/mysql:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    external: true
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local

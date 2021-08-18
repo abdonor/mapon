@@ -1,0 +1,28 @@
+#map {
+    height: 100%;
+}
+#footer {
+    width: 100%;
+
+}
+#sidebar {
+    width: 100%;
+    height: 10%;
+}
+#container {
+    width: 100%;
+}
+.divField {
+    width: 6%;
+    float: left;
+}
+.divButton {
+    float: left;
+}
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
